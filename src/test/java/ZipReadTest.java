@@ -1,4 +1,5 @@
 import com.codeborne.pdftest.PDF;
+import com.codeborne.xlstest.XLS;
 import com.opencsv.CSVReader;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -55,6 +56,25 @@ public class ZipReadTest {
                             new String[]{"Edward Green", "Developer", "110 Pike Street", "WA", "Seattle"},
                             data.get(3)
                     );
+                }
+            }
+        }
+    }
+
+    @Test
+    void xlsFileParsingTest() throws Exception {
+        try (ZipInputStream zis = new ZipInputStream(
+                Objects.requireNonNull(cl.getResourceAsStream("test.zip"))
+        )) {
+
+            ZipEntry entry;
+
+            while ((entry = zis.getNextEntry()) != null) {
+                if (entry.getName().contains(".xls")) {
+                    XLS xls = new XLS(zis);
+                     String actualCellValue = xls.excel.getSheetAt(0).getRow(5).getCell(1).getStringCellValue();
+                     String expectedCellValue = "Mexico";
+                     Assertions.assertEquals(expectedCellValue, actualCellValue);
                 }
             }
         }
