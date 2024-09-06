@@ -1,29 +1,27 @@
 import com.fasterxml.jackson.databind.ObjectMapper;
-import model.ModelIdJson;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.Objects;
-
+import model.Person;
 
 public class JsonTest {
-    ClassLoader cl = JsonTest.class.getClassLoader();
-    static final ObjectMapper objectMapper = new ObjectMapper();
-
+    ObjectMapper mapper = new ObjectMapper();
 
     @Test
-    public void readerJsonAndParsToClassTest() throws Exception {
+    public void readerJsonAndParseToClassTest() throws Exception {
+        ClassLoader cl = JsonTest.class.getClassLoader();
         try (Reader reader = new InputStreamReader(Objects.requireNonNull(cl.getResourceAsStream("test-json.json")))) {
-            ModelIdJson mid = objectMapper.readValue(reader, ModelIdJson.class);
+            Person person = mapper.readValue(reader, Person.class);
 
-                Assertions.assertEquals("1", mid.getId());
-                Assertions.assertEquals("Alexander", mid.getName());
-                Assertions.assertEquals("1989-11-14", mid.getDob());
-            }
+            Assertions.assertEquals("1", person.getId());
+            Assertions.assertEquals("Alexander", person.getName());
+            Assertions.assertEquals("1989-11-14", person.getDob());
         }
     }
+}
 
 
 
