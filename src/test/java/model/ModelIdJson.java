@@ -13,18 +13,18 @@ public class ModelIdJson {
     @JsonProperty("dob")
     private final String dob;
 
-    public ModelIdJson(String id, String name, String dob) {
-        this.id = id;
-        this.name = name;
-        this.dob = dob;
+    public ModelIdJson() {
+        id = "";
+        name = "";
+        dob = "";
     }
+
 
     public String getId() {
         return id;
     }
 
     public String getName() {
-
         return name;
     }
 
